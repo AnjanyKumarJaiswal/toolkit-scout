@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>toolkit-scout — can 100 SaaS apps become AI-agent toolkits?</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>toolkit<span>-</span>scout</h1>
+    <p class="tagline">An AI research pipeline that audited 100 SaaS apps for agent-toolkit readiness — auth, access model, API surface, MCP status.</p>
+    <div class="meta-row" id="metaRow"></div>
+  </div>
+</header>
+
+<section class="headlines">
+  <div class="wrap">
+    <h2>Headline patterns</h2>
+    <div id="headlines"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Distributions</h2>
+    <div class="charts" id="charts"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>All 100 apps</h2>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search apps…">
+      <select id="catFilter"><option value="">All categories</option></select>
+      <select id="verdictFilter">
+        <option value="">All verdicts</option>
+        <option value="ready_today">ready_today</option>
+        <option value="possible_with_workaround">possible_with_workaround</option>
+        <option value="blocked">blocked</option>
+      </select>
+      <span class="count-note" id="countNote"></span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr id="theadRow"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What I built</h2>
+    <div class="arch">
+      <div class="card">
+        <h3>1 · Research pipeline</h3>
+        <p>Python + Flask. One search-grounded gpt-4o-mini call per app (Composio's composio_search toolkit when configured, OpenAI's built-in web_search otherwise), strict JSON-schema output, resumable JSON store, per-app cost logging. Full run: 100/100 apps, ~$1.16. Re-runnable via POST /api/run.</p>
+        <p class="who agent">Agent did this</p>
+      </div>
+      <div class="card">
+        <h3>2 · Verification loops</h3>
+        <p>Random sample of 18 apps, two loops: a strict fact-checker agent re-judges every claim against the fetched evidence page, then flagged fields get a literal fetch-and-confirm pass — a correction only counts if its supporting quote appears verbatim on the page. A human review UI covers the manual check.</p>
+        <p class="who human">Agent + human</p>
+      </div>
+      <div class="card">
+        <h3>3 · Pattern analysis</h3>
+        <p>Aggregates computed over all structured records: auth and access-model distributions, verdicts per category, blocker frequency. Exported as static JSON for this page.</p>
+        <p class="who agent">Agent did this</p>
+      </div>
+      <div class="card">
+        <h3>4 · This page</h3>
+        <p>Single static HTML file with vanilla CSS and plain JS for sort/filter. No framework, no build step. Backend deployed on Render; this page on Vercel.</p>
+        <p class="who agent">Agent did this</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Verification — how often was the agent right?</h2>
+    <div class="verif-stats" id="verifStats"></div>
+    <p class="verif-note" id="verifNote"></p>
+    <div class="examples" id="examples"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>toolkit-scout</p>
+  </div>
+</footer>
+
+<script>
+const BACKEND_BASE_URL = location.hostname === "localhost" || location.protocol === "file:"
+  ? "http://localhost:5001"
+  : "https://toolkit-scout.onrender.com";
+
+const pct = (n, d) => Math.round(100 * n / d);
+
+let D, P, records;
+
+fetch(BACKEND_BASE_URL + "/api/results")
+  .then(res => res.json())
+  .then(data => renderResults(data))
+  .catch(err => {
+    document.getElementById("headlines").innerHTML =
+      `<p>Could not reach the backend at ${BACKEND_BASE_URL} — it may be waking up on Render. Refresh in a few seconds.</p>`;
+  });
+
+function renderResults(data) {
+  D = data;
+  P = D.patterns;
+  records = Object.values(D.records).filter(r => r.status === "ok");
+
+document.getElementById("metaRow").innerHTML = [
+  [P.n_ok, "apps researched"],
+  ["$" + D.meta.total_estimated_usd.toFixed(2), "total LLM spend"],
+  [D.meta.total_web_search_calls, "live web searches"],
+  [P.existing_mcp_count, "already have an MCP"],
+].map(([b, s]) => `<div class="m"><b>${b}</b><span>${s}</span></div>`).join("");
+
+(function headlines() {
+  const v = P.verdict_distribution;
+  const ready = v.ready_today || 0;
+  const blocked = v.blocked || 0;
+  const auth = Object.entries(P.auth_distribution);
+  const cats = Object.entries(P.per_category);
+  const easiest = cats.filter(c => c[1].total >= 5).sort((a, b) => b[1].ready_pct - a[1].ready_pct)[0];
+  const hardest = cats.filter(c => c[1].total >= 5).sort((a, b) => a[1].ready_pct - b[1].ready_pct)[0];
+  const gated = (P.access_model_distribution.partnership_gated || 0) + (P.access_model_distribution.paid_plan_required || 0);
+  const h = [
+    `<em>${ready} of ${P.n_ok} apps could become agent toolkits today</em> — only ${blocked} are outright blocked, and ${v.possible_with_workaround || 0} need a workaround.`,
+    `The ecosystem is API-key first: <em>${auth[0][1]}% of apps accept ${auth[0][0]} auth</em>, while ${P.auth_distribution.OAuth2 || 0}% support OAuth2 — most serious apps offer both.`,
+    `<em>${P.self_serve_total}% of apps are self-serve</em> (free tier or trial); only ${gated} require a paid plan or a partnership before a developer can touch the API.`,
+    `${easiest[0]} is the easiest win (<em>${easiest[1].ready_pct}% ready today</em>); ${hardest[0]} needs the most outreach at ${hardest[1].ready_pct}%.`,
+    `MCP is already mainstream: <em>${P.existing_mcp_count} of 100 apps</em> have an official or community MCP server — differentiation now comes from quality, not existence.`,
+  ];
+  document.getElementById("headlines").innerHTML = h.map(x => `<p>${x}</p>`).join("");
+})();
+
+function barChart(title, dist, cls = "") {
+  const entries = Object.entries(dist);
+  const max = Math.max(...entries.map(e => e[1]));
+  return `<div class="chart"><h3>${title}</h3>` + entries.map(([k, v]) =>
+    `<div class="bar-row"><div class="label" title="${k}">${k}</div>
+     <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct(v, max)}%"></div></div>
+     <div class="num">${v}</div></div>`).join("") + "</div>";
+}
+
+document.getElementById("charts").innerHTML =
+  barChart("Auth methods", P.auth_distribution) +
+  barChart("Access model", P.access_model_distribution, "green") +
+  barChart("Buildability verdict", P.verdict_distribution, "amber") +
+  barChart("Self-serve % by category",
+    Object.fromEntries(Object.entries(P.per_category).map(([c, v]) => [c, v.self_serve_pct])), "green");
+
+const COLS = [
+  ["app_name", "App", r => `<td class="app-name">${r.app_name}</td>`],
+  ["category", "Category", r => {
+    const cat = r.list_category || r.data.category;
+    const flag = r.list_category && r.data.category !== r.list_category
+      ? ` <span class="pill grey" title="agent said: ${r.data.category}">≠</span>` : "";
+    return `<td>${cat}${flag}</td>`;
+  }],
+  ["auth", "Auth", r => `<td>${r.data.auth_methods.join(", ")}</td>`],
+  ["access_model", "Access", r => `<td><span class="pill grey">${r.data.access_model}</span></td>`],
+  ["api", "API", r => `<td>${r.data.api_surface.api_types.join("/")} · ${r.data.api_surface.breadth}</td>`],
+  ["mcp", "MCP?", r => `<td>${r.data.has_existing_mcp.exists ? "yes" : "no"}</td>`],
+  ["verdict", "Verdict", r => {
+    const v = r.data.buildability_verdict;
+    const cls = v === "ready_today" ? "ready" : v === "blocked" ? "blocked" : "workaround";
+    return `<td><span class="pill ${cls}">${v}</span></td>`;
+  }],
+  ["confidence", "Conf.", r => `<td>${r.data.confidence}</td>`],
+  ["evidence", "Evidence", r => `<td><a href="${r.data.evidence_url}" target="_blank" rel="noopener">docs ↗</a></td>`],
+];
+
+const SORT_KEY = {
+  app_name: r => r.app_name.toLowerCase(),
+  category: r => r.list_category || r.data.category,
+  auth: r => r.data.auth_methods.join(","),
+  access_model: r => r.data.access_model,
+  api: r => r.data.api_surface.breadth,
+  mcp: r => r.data.has_existing_mcp.exists ? 0 : 1,
+  verdict: r => r.data.buildability_verdict,
+  confidence: r => ({high: 0, medium: 1, low: 2})[r.data.confidence],
+  evidence: r => r.data.evidence_url,
+};
+
+let sortCol = "app_name", sortAsc = true;
+
+document.getElementById("theadRow").innerHTML =
+  COLS.map(([key, label]) => `<th data-key="${key}">${label}</th>`).join("");
+document.querySelectorAll("thead th").forEach(th => th.onclick = () => {
+  const key = th.dataset.key;
+  if (sortCol === key) sortAsc = !sortAsc; else { sortCol = key; sortAsc = true; }
+  renderTable();
+});
+
+const catSel = document.getElementById("catFilter");
+[...new Set(records.map(r => r.list_category || r.data.category))].sort().forEach(c => {
+  catSel.insertAdjacentHTML("beforeend", `<option>${c}</option>`);
+});
+
+function renderTable() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const cat = catSel.value;
+  const verdict = document.getElementById("verdictFilter").value;
+  let rows = records.filter(r =>
+    (!q || r.app_name.toLowerCase().includes(q) || r.data.one_line_description.toLowerCase().includes(q)) &&
+    (!cat || (r.list_category || r.data.category) === cat) &&
+    (!verdict || r.data.buildability_verdict === verdict));
+  const key = SORT_KEY[sortCol];
+  rows.sort((a, b) => {
+    const x = key(a), y = key(b);
+    return (x < y ? -1 : x > y ? 1 : 0) * (sortAsc ? 1 : -1);
+  });
+  document.getElementById("tbody").innerHTML = rows.map(r =>
+    `<tr>${COLS.map(c => c[2](r)).join("")}</tr>`).join("");
+  document.getElementById("countNote").textContent = `${rows.length} of ${records.length} apps`;
+}
+["search", "catFilter", "verdictFilter"].forEach(id =>
+  document.getElementById(id).oninput = renderTable);
+renderTable();
+
+(function verification() {
+  const acc = D.verification.accuracy;
+  const stats = document.getElementById("verifStats");
+  const note = document.getElementById("verifNote");
+  const mismatchNote = P.category_mismatches
+    ? ` One known miss visible across the full set: the agent's own category label disagreed with the curated list on ${P.category_mismatches} of 100 apps (marked ≠ in the table) — the curated category is shown, the agent's guess is in the tooltip.`
+    : "";
+  if (!acc.fields_judged) {
+    note.textContent = "Manual review in progress — 18 randomly sampled apps, 7 fields each, every claim checked by hand against its evidence URL. Accuracy numbers will appear here once the review pass is complete." + mismatchNote;
+    return;
+  }
+  stats.innerHTML = [
+    [Math.round(acc.accuracy_before * 100) + "%", "first-pass accuracy"],
+    [acc.fixed_in_round2, "claims fixed in 2nd pass"],
+    [Math.round(acc.accuracy_after * 100) + "%", "accuracy after verification"],
+    [acc.fields_judged, "fields judged by hand"],
+  ].map(([b, s]) => `<div class="v"><b>${b}</b><span>${s}</span></div>`).join("");
+  note.textContent = "Method: 18 randomly sampled apps × 7 fields. Loop 1: a strict fact-checker agent re-judged every claim against the fetched evidence page. Loop 2: flagged fields got a literal fetch-and-confirm pass — a fix only counts if its supporting quote appears verbatim on the docs page. Unconfirmed flags stay marked as errors below, honestly." + mismatchNote;
+
+  const d1 = D.verification.decisions.round1 || {};
+  const d2 = D.verification.decisions.round2 || {};
+  const reasons = D.verification.decisions.round1_reasons || {};
+  const wrong = [];
+  for (const [app, fields] of Object.entries(d1))
+    for (const [field, verdict] of Object.entries(fields))
+      if (verdict === "incorrect" && D.records[app] && (d2[app] || {})[field] !== "correct")
+        wrong.push([app, field]);
+  document.getElementById("examples").innerHTML = wrong.slice(0, 4).map(([app, field]) => {
+    const val = JSON.stringify(D.records[app].data[field]);
+    const why = (reasons[app] || {})[field] || "did not match the evidence page";
+    return `<div class="example"><b>${app} · ${field}</b> — the agent claimed ${val}. Verification: ${why}</div>`;
+  }).join("");
+})();
+}
+</script>
+</body>
+</html>

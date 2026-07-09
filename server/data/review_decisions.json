@@ -1,0 +1,375 @@
+{
+  "round1": {
+    "Aircall": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "incorrect",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Apify": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "incorrect",
+      "api_surface": "correct",
+      "has_existing_mcp": "incorrect",
+      "buildability_verdict": "unsure",
+      "evidence_url": "correct"
+    },
+    "Attio": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Front": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Help Scout": {
+      "category": "correct",
+      "auth_methods": "incorrect",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Intercom": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "incorrect",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Klaviyo": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "incorrect",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Meta Ads": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "incorrect",
+      "buildability_verdict": "unsure",
+      "evidence_url": "correct"
+    },
+    "Monday.com": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Plaid": {
+      "category": "correct",
+      "auth_methods": "incorrect",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Pylon": {
+      "category": "incorrect",
+      "auth_methods": "correct",
+      "access_model": "incorrect",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "incorrect",
+      "evidence_url": "correct"
+    },
+    "Reducto": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "incorrect",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Sentry": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "incorrect",
+      "api_surface": "correct",
+      "has_existing_mcp": "unsure",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Supabase": {
+      "category": "correct",
+      "auth_methods": "incorrect",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "incorrect",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Twenty": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "incorrect",
+      "buildability_verdict": "unsure",
+      "evidence_url": "correct"
+    },
+    "Vonage": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "WhatsApp Business": {
+      "category": "correct",
+      "auth_methods": "incorrect",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    },
+    "Xero": {
+      "category": "correct",
+      "auth_methods": "correct",
+      "access_model": "correct",
+      "api_surface": "correct",
+      "has_existing_mcp": "correct",
+      "buildability_verdict": "correct",
+      "evidence_url": "correct"
+    }
+  },
+  "round2": {
+    "Aircall": {
+      "has_existing_mcp": "unsure"
+    },
+    "Apify": {
+      "access_model": "unsure",
+      "has_existing_mcp": "unsure"
+    },
+    "Help Scout": {
+      "auth_methods": "unsure"
+    },
+    "Intercom": {
+      "has_existing_mcp": "unsure"
+    },
+    "Klaviyo": {
+      "access_model": "unsure"
+    },
+    "Meta Ads": {
+      "has_existing_mcp": "unsure"
+    },
+    "Plaid": {
+      "auth_methods": "unsure"
+    },
+    "Pylon": {
+      "category": "correct",
+      "access_model": "correct",
+      "buildability_verdict": "correct"
+    },
+    "Reducto": {
+      "access_model": "correct"
+    },
+    "Sentry": {
+      "access_model": "unsure"
+    },
+    "Supabase": {
+      "auth_methods": "correct",
+      "has_existing_mcp": "correct"
+    },
+    "Twenty": {
+      "has_existing_mcp": "unsure"
+    },
+    "WhatsApp Business": {
+      "auth_methods": "unsure"
+    }
+  },
+  "round1_reasons": {
+    "Aircall": {
+      "category": "The category 'Chat/Comms' aligns with the nature of Aircall's services.",
+      "auth_methods": "The evidence states that authentication can be done via 'OAuth 2.0' and 'Basic Auth', which corresponds to the claimed 'OAuth2' and 'API key'.",
+      "access_model": "The statement 'self_serve_trial' is consistent with the notion of users being able to try out the service by themselves.",
+      "api_surface": "The details about a 'comprehensive RESTful API' and that it covers calls, messages, and conversation intelligence are supported by the evidence.",
+      "has_existing_mcp": "While there are existing integrations mentioned, there is no direct evidence of a specific MCP server being present; the claim is too vague.",
+      "buildability_verdict": "The API is said to be well-documented and provides a comprehensive set of features, indicating it is 'ready today' for developers to use.",
+      "evidence_url": "The provided URL is valid and leads to the developer documentation for Aircall."
+    },
+    "Apify": {
+      "category": "The evidence confirms that Apify operates in the Data/Scraping category.",
+      "auth_methods": "The evidence indicates that API key is an authentication method used for the Apify API.",
+      "access_model": "The evidence does not support the claim of a 'self_serve_free' access model; it does not provide explicit mention of that model in the provided documentation.",
+      "api_surface": "The evidence describes the Apify API as a RESTful interface with extensive functionalities for various operations.",
+      "has_existing_mcp": "The documentation does not mention the existence of an MCP server for integrating with AI agents and large language models.",
+      "buildability_verdict": "The claim of 'ready_today' cannot be confirmed with the provided evidence as it does not specify buildability readiness.",
+      "evidence_url": "The evidence URL provided is a valid link to Apify's official API documentation."
+    },
+    "Attio": {
+      "category": "Attio is categorized as a CRM platform.",
+      "auth_methods": "The app supports both OAuth2 and API key authentication methods as stated in the documentation.",
+      "access_model": "The evidence indicates that Attio offers a self-serve trial model.",
+      "api_surface": "The documentation confirms that Attio provides a public REST API with full CRUD access, using Bearer token authentication and offering a public OpenAPI specification.",
+      "has_existing_mcp": "The evidence confirms that Attio has an MCP server that allows for AI integration to manage workspaces.",
+      "buildability_verdict": "The documentation indicates that developers can start building with Attio today.",
+      "evidence_url": "The provided URL is a valid page relevant to Attio's documentation."
+    },
+    "Front": {
+      "category": "The claim about Front being in the Helpdesk category is supported since Front is a known helpdesk tool.",
+      "auth_methods": "The evidence states Front supports OAuth2 and API Tokens, which validates the claim about auth methods.",
+      "access_model": "The evidence does not contradict the claim; 'self_serve_trial' can align with general usage models for such applications.",
+      "api_surface": "The API surface description aligns with the information provided in the evidence, detailing the broad capabilities and support for webhooks.",
+      "has_existing_mcp": "The claim is supported as the evidence confirms that there is no official or well-known MCP server for Front.",
+      "buildability_verdict": "'Ready today' aligns with typical descriptions of an accessible API as demonstrated in the documentation.",
+      "evidence_url": "The URL links directly to Front's developer documentation, which is relevant."
+    },
+    "Help Scout": {
+      "category": "Help Scout is known to be a helpdesk platform, which aligns with the claim.",
+      "auth_methods": "The evidence does not explicitly confirm the availability of OAuth2 as an auth method; only API Key is mentioned.",
+      "access_model": "Typically, Help Scout requires paid plans for full access, which supports this claim.",
+      "api_surface": "The evidence mentions a RESTful API covering various aspects, aligning with the claim.",
+      "has_existing_mcp": "The claim states there is no existing MCP, and this is confirmed by the evidence.",
+      "buildability_verdict": "The tools and guides presented in the evidence indicate readiness for developers.",
+      "evidence_url": "The URL provided leads to official Help Scout developer documentation."
+    },
+    "Intercom": {
+      "category": "The evidence indicates that the app is categorized under 'Helpdesk', which aligns with its functionality as a customer communication platform.",
+      "auth_methods": "The evidence supports that Intercom offers 'OAuth2' and 'API key' as authentication methods.",
+      "access_model": "The evidence aligns with the claim that Intercom offers a 'self_serve_trial' access model.",
+      "api_surface": "The evidence confirms that Intercom provides a 'broad' API surface with both 'REST' and 'GraphQL' types, and it details extensive API coverage.",
+      "has_existing_mcp": "The claim stating the existence of MCP servers is unsupported as the evidence does not explicitly confirm the existence of existing MCPs, only mentions the API being well-documented.",
+      "buildability_verdict": "The evidence supports that the API is 'ready today', implying that it's available and functional.",
+      "evidence_url": "The provided URL is a real and relevant page for Intercom's developer documentation."
+    },
+    "Klaviyo": {
+      "category": "The evidence confirms Klaviyo operates in the E-commerce category.",
+      "auth_methods": "The evidence indicates that Klaviyo uses API keys for authentication.",
+      "access_model": "The evidence does not explicitly state that Klaviyo's access model is self-serve free; it is important to confirm this from the official documentation.",
+      "api_surface": "The evidence supports that Klaviyo offers a comprehensive RESTful API covering various aspects as stated.",
+      "has_existing_mcp": "The evidence affirms that no official or well-known MCP server exists for Klaviyo.",
+      "buildability_verdict": "The evidence indicates that Klaviyo is ready to use based on the API overview.",
+      "evidence_url": "The URL provided leads to the official Klaviyo API documentation."
+    },
+    "Meta Ads": {
+      "category": "The app's category is accurately stated as Ads/Marketing on the evidence page.",
+      "auth_methods": "The evidence confirms that Meta Ads uses OAuth2 as an authentication method.",
+      "access_model": "The access model is correctly identified as 'self_serve_free' based on the described options in the evidence.",
+      "api_surface": "The evidence mentions the API's capabilities for campaign management, audience management, and more, confirming the claim.",
+      "has_existing_mcp": "The claim about the existence of an MCP server and tools in beta as of April 2026 is unsupported by the evidence provided, which does not mention MCP.",
+      "buildability_verdict": "The evidence does not provide specific information about the buildability status, leaving it unclear.",
+      "evidence_url": "The provided URL leads to the official documentation relevant to the Meta Ads app."
+    },
+    "Monday.com": {
+      "category": "Monday.com is classified under PM/Productivity tools on its official website.",
+      "auth_methods": "The evidence confirms that Monday.com supports both API key and OAuth2 as authentication methods.",
+      "access_model": "The evidence states that a paid plan is required to access the API and other features.",
+      "api_surface": "The content mentions that Monday.com uses a GraphQL API with broad capabilities for interacting with data.",
+      "has_existing_mcp": "The evidence confirms that an existing MCP (Managed Connection Point) is offered by Monday.com for connecting agents.",
+      "buildability_verdict": "The platform is described as ready for building applications using its tools and APIs.",
+      "evidence_url": "The provided URL is a valid link to Monday.com's official developer documentation."
+    },
+    "Plaid": {
+      "category": "Plaid operates in the fintech sector, which is accurately classified under the category.",
+      "auth_methods": "Plaid API requires a client_id and secret rather than just an API key.",
+      "access_model": "The evidence indicates that accessing the Plaid API requires creating an account and is consistent with a self-serve trial model.",
+      "api_surface": "The evidence supports the claim that Plaid offers a broad range of API endpoints covering various functionalities.",
+      "has_existing_mcp": "The claim that Plaid has an existing MCP (Managed Connectivity Partner) in the form of its official API is substantiated.",
+      "buildability_verdict": "Plaid's API is described as ready for use, confirming the readiness claim.",
+      "evidence_url": "The provided URL leads to Plaid's official API documentation, which is relevant and accurate."
+    },
+    "Pylon": {
+      "category": "The evidence does not confirm that the 'category' is explicitly labeled as 'CRM' in the referenced documentation.",
+      "auth_methods": "The given auth methods, OAuth2 and API key, are indeed mentioned in the API documentation.",
+      "access_model": "No clear evidence in the documentation defines the 'access_model' as requiring a paid plan; this must be stated explicitly.",
+      "api_surface": "The details about the breadth and functionalities of the API correspond with what is presented in the documentation.",
+      "has_existing_mcp": "The claim that no existing MCP server for Pylon is confirmed by the absence of evidence.",
+      "buildability_verdict": "The claim of 'possible_with_workaround' requires specific information from the documentation about buildability, which is not provided.",
+      "evidence_url": "The evidence URL leads to relevant API reference documentation for Pylon."
+    },
+    "Reducto": {
+      "category": "The evidence confirms that Reducto is a document platform that falls under the 'Data/Scraping' category.",
+      "auth_methods": "The evidence specifies that authentication is done using an API key, which is supported by the documentation.",
+      "access_model": "The evidence does not specifically state that the access model is 'self_serve_free'; it mentions creating a free account, which may not imply full free access.",
+      "api_surface": "The evidence provides a broad overview of the types of APIs available and specifies that Reducto supports over 30 file types.",
+      "has_existing_mcp": "The evidence confirms that no official or well-known MCP server exists for Reducto.",
+      "buildability_verdict": "The evidence implies readiness for use based on the detailed API documentation and available functionalities.",
+      "evidence_url": "The provided URL leads to the official documentation for Reducto, which is relevant."
+    },
+    "Sentry": {
+      "category": "The Sentry API is indeed categorized under 'Helpdesk' as it provides features like error monitoring and performance tracking.",
+      "auth_methods": "Sentry supports OAuth2 and API key as authentication methods as confirmed in the provided documentation.",
+      "access_model": "The evidence does not explicitly state that Sentry operates on a 'self-serve free' model; it's about accessing the API, but does not confirm overall access details.",
+      "api_surface": "The evidence clearly describes Sentry's API as RESTful with a broad surface and details various functionalities it covers, which aligns with the claims made.",
+      "has_existing_mcp": "While the API is well-documented and widely used, the evidence does not explicitly verify the existence of an existing Managed Control Plane (MCP) servers.",
+      "buildability_verdict": "The claim that the API is 'ready today' is supported by the evidence indicating its versioning and stability of public endpoints.",
+      "evidence_url": "The URL provided directs to the official Sentry API documentation, which is relevant and valid."
+    },
+    "Supabase": {
+      "category": "The app is categorized under E-commerce, which aligns with its intended use.",
+      "auth_methods": "The evidence does not confirm that Supabase supports all listed auth methods, especially not 'Basic' or 'token' authentication; it primarily mentions key-auth.",
+      "access_model": "Evidence states the API is designed for quick access and self-service, which supports the claim of 'self_serve_free'.",
+      "api_surface": "The evidence clearly mentions a comprehensive API surface, including auto-generated REST APIs and GraphQL API.",
+      "has_existing_mcp": "Evidence does not confirm the existence of an MCP; it only suggests suitability for integration without concrete examples.",
+      "buildability_verdict": "It indicates that the APIs are ready to be used immediately as they are auto-generated and accessible.",
+      "evidence_url": "The provided URL leads to relevant official documentation for Supabase."
+    },
+    "Twenty": {
+      "category": "Twenty is categorized as a CRM according to its documentation.",
+      "auth_methods": "The evidence confirms that Twenty supports both OAuth and API key authentication methods.",
+      "access_model": "The evidence states that Twenty has a self-serve trial access model.",
+      "api_surface": "Documentation explicitly states that Twenty offers both REST and GraphQL APIs for accessing CRM data.",
+      "has_existing_mcp": "The evidence does not mention any existing MCP server; instead, it focuses on APIs, webhooks, and custom apps.",
+      "buildability_verdict": "The documentation does not provide sufficient detail to determine if the app is 'ready today' for deployment.",
+      "evidence_url": "The provided URL is a valid link to the documentation relevant to the app 'Twenty'."
+    },
+    "Vonage": {
+      "category": "Vonage is indeed categorized under Chat/Comms, providing communication services.",
+      "auth_methods": "The evidence supports that Vonage offers authentication methods like API key, Basic, and token.",
+      "access_model": "The documentation indicates access to services via a self-serve trial model.",
+      "api_surface": "The evidence details a broad range of APIs offered by Vonage, confirming the claim of broad API surface.",
+      "has_existing_mcp": "The evidence references an MCP server that exists for Vonage, aligning with the claim.",
+      "buildability_verdict": "The statement about being ready today aligns with the evidence provided about Vonage APIs being available for use.",
+      "evidence_url": "The provided URL leads to the official Vonage developer documentation page, which is relevant and valid."
+    },
+    "WhatsApp Business": {
+      "category": "The claim accurately describes the app as a communication platform.",
+      "auth_methods": "The official documentation does not state that 'API key' is a supported authentication method for the WhatsApp Business API.",
+      "access_model": "The documentation indicates that a paid plan is required to access the WhatsApp Business API.",
+      "api_surface": "The evidence confirms that the API provides extensive functionality for messaging, notifications, and customer support.",
+      "has_existing_mcp": "The evidence states that an official MCP (Multi-Channel Platform) server exists for WhatsApp Business API.",
+      "buildability_verdict": "The evidence suggests that the WhatsApp Business API is designed for immediate use.",
+      "evidence_url": "The provided URL leads to the official WhatsApp Business API documentation."
+    },
+    "Xero": {
+      "category": "Xero operates in the E-commerce category as it offers software solutions for small businesses, including e-commerce platforms.",
+      "auth_methods": "The evidence mentions OAuth 2 as a method available for authentication.",
+      "access_model": "The platform provides a self-serve trial access model as indicated in the evidence.",
+      "api_surface": "The evidence supports claims about the API surface, stating it offers a broad set of APIs covering accounting, invoicing, payroll, etc.",
+      "has_existing_mcp": "The evidence clearly states that Xero provides an official developer platform with extensive documentation, implying the existence of a MCP.",
+      "buildability_verdict": "The overall context of Xero's developer platform indicates readiness for development and building integrations.",
+      "evidence_url": "The provided URL leads to Xero's official developer documentation, which is relevant."
+    }
+  }
+}

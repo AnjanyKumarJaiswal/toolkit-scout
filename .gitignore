@@ -1,0 +1,9 @@
+.vscode
+server/app/
+node_modules
+package-lock.json
+package.json
+.env
+.env.local
+__pycache__
+*.tmp

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>toolkit-scout · verification review</title>
+<style>
+  :root {
+    --bg: #0f1117; --panel: #171a23; --border: #2a2f3d;
+    --text: #e6e8ee; --muted: #8b90a0; --accent: #6ea8fe;
+    --good: #34c98e; --bad: #f2636f; --meh: #e0b45c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, sans-serif; padding: 32px 16px 80px; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: var(--muted); margin-bottom: 24px; }
+  .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+  button { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; cursor: pointer; font-size: 14px; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #0b0d12; font-weight: 600; }
+  .stats { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 24px; display: none; }
+  .stats.show { display: block; }
+  .stats b { color: var(--accent); }
+  .app { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 18px; overflow: hidden; }
+  .app-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .app-head h2 { font-size: 17px; }
+  .app-head a { color: var(--accent); font-size: 13px; word-break: break-all; }
+  .raw { padding: 10px 18px; color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); }
+  .field { display: grid; grid-template-columns: 170px 1fr 200px; gap: 12px; padding: 10px 18px; border-bottom: 1px solid var(--border); align-items: center; }
+  .field:last-child { border-bottom: none; }
+  .fname { color: var(--muted); font-size: 13px; }
+  .fval { font-size: 14px; word-break: break-word; }
+  .fval code { background: #0b0d12; padding: 2px 6px; border-radius: 5px; font-size: 13px; }
+  .votes { display: flex; gap: 6px; justify-content: flex-end; }
+  .votes button { padding: 5px 10px; font-size: 12px; }
+  .votes button.sel-correct { background: var(--good); border-color: var(--good); color: #06130d; font-weight: 700; }
+  .votes button.sel-incorrect { background: var(--bad); border-color: var(--bad); color: #190608; font-weight: 700; }
+  .votes button.sel-unsure { background: var(--meh); border-color: var(--meh); color: #191204; font-weight: 700; }
+  .empty { color: var(--muted); text-align: center; padding: 60px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Verification review</h1>
+  <p class="sub">For each field: open the evidence link, then mark the agent's claim correct / incorrect / unsure. Decisions save instantly.</p>
+  <div class="toolbar">
+    <button class="primary" id="newSample">New sample (18 apps)</button>
+    <button id="showAcc">Show accuracy</button>
+    <span class="sub" id="progress"></span>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div id="apps"><p class="empty">Loading…</p></div>
+</div>
+<script>
+const FIELDS = ["category","auth_methods","access_model","api_surface","has_existing_mcp","buildability_verdict","evidence_url"];
+let state = null;
+
+function fmt(field, data) {
+  const v = data[field];
+  if (field === "auth_methods") return v.join(", ");
+  if (field === "api_surface") return `${v.api_types.join("/")} · ${v.breadth} — ${v.notes}`;
+  if (field === "has_existing_mcp") return `${v.exists ? "yes" : "no"} — ${v.note}`;
+  if (field === "evidence_url") return `<a href="${v}" target="_blank">${v}</a>`;
+  return `<code>${v}</code>`;
+}
+
+function render() {
+  const box = document.getElementById("apps");
+  if (!state) { box.innerHTML = '<p class="empty">No sample yet — click "New sample".</p>'; return; }
+  const d1 = state.decisions.round1 || {};
+  let done = 0, total = 0;
+  box.innerHTML = state.sample.apps.map(name => {
+    const rec = state.records[name];
+    if (!rec) return "";
+    const data = rec.data;
+    const rows = FIELDS.map(f => {
+      total++;
+      const cur = (d1[name] || {})[f];
+      if (cur) done++;
+      const btn = v => `<button class="${cur === v ? "sel-" + v : ""}" onclick="vote('${name}','${f}','${v}')">${v}</button>`;
+      return `<div class="field">
+        <div class="fname">${f}</div>
+        <div class="fval">${fmt(f, data)}</div>
+        <div class="votes">${btn("correct")}${btn("incorrect")}${btn("unsure")}</div>
+      </div>`;
+    }).join("");
+    return `<div class="app">
+      <div class="app-head"><h2>${name}</h2><a href="${data.evidence_url}" target="_blank">evidence ↗</a></div>
+      <div class="raw">${data.raw_notes}</div>
+      ${rows}
+    </div>`;
+  }).join("");
+  document.getElementById("progress").textContent = `${done}/${total} fields judged`;
+}
+
+async function load() {
+  const r = await fetch("/api/review/data");
+  state = r.ok ? await r.json() : null;
+  render();
+}
+
+async function vote(app, field, verdict) {
+  await fetch("/api/review/decision", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({app_name: app, field, verdict, round: "round1"}),
+  });
+  state.decisions.round1 = state.decisions.round1 || {};
+  (state.decisions.round1[app] = state.decisions.round1[app] || {})[field] = verdict;
+  render();
+}
+
+document.getElementById("newSample").onclick = async () => {
+  if (state && !confirm("Create a new random sample? Existing sample is replaced.")) return;
+  await fetch("/api/review/sample", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"});
+  await load();
+};
+
+document.getElementById("showAcc").onclick = async () => {
+  const acc = await (await fetch("/api/review/accuracy")).json();
+  const el = document.getElementById("stats");
+  const rows = Object.entries(acc.per_field)
+    .map(([f, c]) => `${f}: ${c.accuracy === null ? "—" : Math.round(c.accuracy * 100) + "%"} (${c.correct}✓ ${c.incorrect}✗ ${c.unsure}?)`)
+    .join("<br>");
+  el.innerHTML = `<b>Overall before: ${acc.accuracy_before === null ? "—" : Math.round(acc.accuracy_before * 100) + "%"}</b>
+    · fixed in round 2: ${acc.fixed_in_round2}
+    · <b>after: ${acc.accuracy_after === null ? "—" : Math.round(acc.accuracy_after * 100) + "%"}</b><br><br>${rows}`;
+  el.classList.add("show");
+};
+
+load();
+</script>
+</body>
+</html>

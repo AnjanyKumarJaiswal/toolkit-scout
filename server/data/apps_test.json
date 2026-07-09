@@ -1,0 +1,7 @@
+[
+  {"name": "HubSpot", "hint_url": "https://developers.hubspot.com"},
+  {"name": "Zendesk", "hint_url": "https://developer.zendesk.com"},
+  {"name": "Slack", "hint_url": "https://api.slack.com"},
+  {"name": "Shopify", "hint_url": "https://shopify.dev"},
+  {"name": "Plaid", "hint_url": "https://plaid.com/docs"}
+]
