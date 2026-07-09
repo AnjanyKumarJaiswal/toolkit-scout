@@ -96,10 +96,11 @@
   </div>
 </footer>
 
+<script src="config.js"></script>
 <script>
 const BACKEND_BASE_URL = location.hostname === "localhost" || location.protocol === "file:"
-  ? "http://localhost:5001"
-  : "https://toolkit-scout.onrender.com";
+  ? window.CONFIG.LOCAL_BACKEND_URL
+  : window.CONFIG.BACKEND_URL;
 
 const pct = (n, d) => Math.round(100 * n / d);
 
